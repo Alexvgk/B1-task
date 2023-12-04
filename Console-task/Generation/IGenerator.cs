@@ -8,7 +8,7 @@ namespace Console_Test.Generation
 {
     public interface IGenerator
     {
-        public bool GenerateFile();
-        public string GenerateFileContent();
+        public bool generateFile();
+        public string generateFileContent();
     }
 }

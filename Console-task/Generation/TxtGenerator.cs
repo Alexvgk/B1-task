@@ -8,7 +8,7 @@ namespace Console_Test.Generation
 {
     public class TxtGenerator : IGenerator
     {
-        public bool GenerateFile()
+        public bool generateFile()
         {
             try
             {
@@ -19,14 +19,15 @@ namespace Console_Test.Generation
                     Directory.CreateDirectory(outputPath);
                 }
 
-                Random random = new Random();//For generating random numbers
+                //For generating random numbers
+                Random random = new Random();
 
                 // Create 100 files
                 for (int i = 1; i <= 100; i++)
                 {
                     string fileName = $"file{i}.txt";
                     string filePath = Path.Combine(outputPath, fileName);
-                    string fileContent = GenerateFileContent();
+                    string fileContent = generateFileContent();
 
                     // Write to the file
                     File.WriteAllText(filePath, fileContent.ToString());
@@ -41,10 +42,12 @@ namespace Console_Test.Generation
             }
         }
 
-        public string GenerateFileContent()
+        public string generateFileContent()
         {
             Random random = new Random();
-            StringBuilder fileContent = new StringBuilder();// Use StringBuilder for efficient string manipulation
+
+            // Use StringBuilder for efficient string manipulation
+            StringBuilder fileContent = new StringBuilder();
 
             for (int j = 0; j < 100000; j++)// Generate 100,000 lines for file
             {
@@ -55,7 +58,7 @@ namespace Console_Test.Generation
                 string latinChars = Guid.NewGuid().ToString().Substring(0, 10);
 
                 // Generate a random set of Russian characters
-                string russianChars = GenerateRussianString(random);
+                string russianChars = generateRussianString(random);
 
                 // Generate a random positive even integer in the range from 1 to 100,000,000
                 int randomInt = random.Next(1, 50000000) * 2;
@@ -70,7 +73,7 @@ namespace Console_Test.Generation
         }
 
 
-        private string GenerateRussianString(Random random)
+        private string generateRussianString(Random random)
         {
             StringBuilder russianChars = new StringBuilder();
 
