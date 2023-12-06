@@ -56,50 +56,56 @@ namespace Console_Test.Conbination
         {
             StringBuilder combinedContent = new StringBuilder();
             int deletedLinesCount = 0;
-
-            // Iterate through selected file numbers
-            foreach (int fileNumber in selectedFileNumbers)
+            try
             {
-                // Get the path of the current file
-                string filePath = getFilePath(folderPath, fileNumber);
-
-                // Check if the file exists
-                if (File.Exists(filePath))
+                // Iterate through selected file numbers
+                foreach (int fileNumber in selectedFileNumbers)
                 {
-                    // Read the content of the file
-                    string fileContent = File.ReadAllText(filePath);
+                    // Get the path of the current file
+                    string filePath = getFilePath(folderPath, fileNumber);
 
-                    // Split the content into lines
-                    string[] lines = fileContent.Split('\n');
-
-                    // Iterate through each line
-                    foreach (var line in lines)
+                    // Check if the file exists
+                    if (File.Exists(filePath))
                     {
-                        // If the line does not contain the specified fragment
-                        if (!line.Contains(patternToRemove))
+                        // Read the content of the file
+                        string fileContent = File.ReadAllText(filePath);
+
+                        // Split the content into lines
+                        string[] lines = fileContent.Split('\n');
+
+                        // Iterate through each line
+                        foreach (var line in lines)
                         {
-                            // Append the line to the combined content
-                            combinedContent.AppendLine(line);
-                        }
-                        else
-                        {
-                            // Increase the counter for deleted lines
-                            deletedLinesCount++;
+                            // If the line does not contain the specified fragment
+                            if (!line.Contains(patternToRemove))
+                            {
+                                // Append the line to the combined content
+                                combinedContent.AppendLine(line);
+                            }
+                            else
+                            {
+                                // Increase the counter for deleted lines
+                                deletedLinesCount++;
+                            }
                         }
                     }
+                    else
+                    {
+                        // Display a message if the file does not exist
+                        Console.WriteLine($"File with number {fileNumber} does not exist.");
+                    }
                 }
-                else
-                {
-                    // Display a message if the file does not exist
-                    Console.WriteLine($"File with number {fileNumber} does not exist.");
-                }
+
+                // Write the combined content to the output file
+                File.WriteAllText(outputPath, combinedContent.ToString());
+
+                // Return the count of deleted lines
+                return deletedLinesCount;
             }
-
-            // Write the combined content to the output file
-            File.WriteAllText(outputPath, combinedContent.ToString());
-
-            // Return the count of deleted lines
-            return deletedLinesCount;
+            catch (DirectoryNotFoundException)
+            {
+                throw;
+            }
         }
 
 
