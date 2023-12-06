@@ -1,4 +1,5 @@
 ﻿using Console_Test.Model;
+using Console_Test.Services.Data.DataServices;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -9,21 +10,12 @@ using System.Threading.Tasks;
 
 namespace Console_Test.Services.Data.Repository
 {
-    public class DataRepo : IRepository<DataModel>
+    public class DataRepo : BaseDataService<DataModel>,IRepository<DataModel>
     {
 
-        private string _connectionString;
 
-        public DataRepo()
+        public DataRepo() : base() 
         {
-            string mdfFilePath = @"DB\Database.mdf";
-
-            // get root directory
-            string currentDirectory = AppDomain.CurrentDomain.BaseDirectory;
-
-            // absolute DbPath
-            string absoluteMdfPath = System.IO.Path.Combine(currentDirectory, mdfFilePath);
-            _connectionString = $"Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename={absoluteMdfPath};Integrated Security=True;";
         }
 
         public void deleteData(int id)
@@ -49,7 +41,7 @@ namespace Console_Test.Services.Data.Repository
 
                 using (SqlBulkCopy bulkCopy = new SqlBulkCopy(connection))
                 {
-                    bulkCopy.DestinationTableName = "YourTableName"; // Замените на имя вашей таблицы
+                    bulkCopy.DestinationTableName = "DataTable";
 
                     bulkCopy.NotifyAfter = 500;
                     bulkCopy.SqlRowsCopied += (sender, e) => OnSqlRowsCopied(e, data.Count);
@@ -58,6 +50,7 @@ namespace Console_Test.Services.Data.Repository
                 }
             }
         }
+
 
         public void updateData(int id, DataModel model)
         {
