@@ -1,4 +1,4 @@
-﻿using Console_Test.Conbination.Model;
+﻿using Console_Test.Model;
 using System;
 using System.Collections.Generic;
 using System.Data;
