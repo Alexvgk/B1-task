@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Console_Test.Conbination.Model
+namespace Console_Test.Model
 {
     public abstract class BaseModel
     {
