@@ -9,18 +9,18 @@ namespace Console_Test.Services.Data
     public static class SqlQueries
     {
         public const string InsertSingleData =
-            "INSERT INTO Data (Date, LatinSymbols, RussianSymbols, IntegerNumber, FloatingPointNumber) " +
+            "INSERT INTO DataTable (Date, LatinSymbols, RussianSymbols, IntegerNumber, FloatingPointNumber) " +
             "VALUES (@Date, @LatinSymbols, @RussianSymbols, @IntegerNumber, @FloatingPointNumber)";
 
         public const string InsertMultipleData =
-            "INSERT INTO Data (Date, LatinSymbols, RussianSymbols, IntegerNumber, FloatingPointNumber) " +
+            "INSERT INTO DataTable (Date, LatinSymbols, RussianSymbols, IntegerNumber, FloatingPointNumber) " +
             "VALUES {0}";
 
         public const string RetrieveData =
-            "SELECT * FROM Data";
+            "SELECT * FROM DataTable";
 
         public const string UpdateData =
-            "UPDATE Data SET " +
+            "UPDATE DataTable SET " +
             "Date = @Date, " +
             "LatinSymbols = @LatinSymbols, " +
             "RussianSymbols = @RussianSymbols, " +
@@ -29,10 +29,10 @@ namespace Console_Test.Services.Data
             "WHERE Id = @Id";
 
         public const string DeleteData =
-            "DELETE FROM Data WHERE Id = @Id";
+            "DELETE FROM DataTable WHERE Id = @Id";
 
         public const string CreateTable =
-            "CREATE TABLE YourTableName " +
+            "CREATE TABLE DataTable " +
             "(" +
             "    Id INT PRIMARY KEY IDENTITY(1,1), " +
             "    Date DATETIME, " +
@@ -41,5 +41,8 @@ namespace Console_Test.Services.Data
             "    IntegerNumber BIGINT, " +
             "    FloatingPointNumber FLOAT " +
     ")";
+
+        public const string createProcedureScript = "Exec CalculateSumAndMedian";
+
     }
 }
