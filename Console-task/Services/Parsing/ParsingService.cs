@@ -1,6 +1,7 @@
 ﻿using Console_Test.Model;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -72,10 +73,13 @@ namespace Console_Test.Services.Parsing
         {
             try
             {
+                // Split the input line into parts using "||" as the delimiter
                 string[] parts = line.Split(new[] { "||" }, StringSplitOptions.None);
 
+                // Check if the line contains the expected number of parts
                 if (parts.Length == 6)
                 {
+                    // Create a new DataModel object and populate its properties
                     return new DataModel
                     {
                         Date = DateTime.ParseExact(parts[0].Trim(), "dd.MM.yyyy", CultureInfo.InvariantCulture).Date,
@@ -85,12 +89,35 @@ namespace Console_Test.Services.Parsing
                         FloatingPointNumber = double.Parse(parts[4].Trim(), CultureInfo.GetCultureInfo("ru-RU"))
                     };
                 }
-                else throw new Exception("Infalid Format");
+                else
+                    // Throw an exception if the input line has an invalid format
+                    throw new Exception("Invalid Format");
             }
             catch(Exception) 
             {
                 throw;
             }
+        }
+
+        public static DataTable ParseToDataTable(List<DataModel> dataList)
+        {
+            DataTable table = new DataTable();
+
+            // Add columns to the DataTable
+            table.Columns.Add("Id", typeof(int));
+            table.Columns.Add("Date", typeof(DateTime));
+            table.Columns.Add("LatinSymbols", typeof(string));
+            table.Columns.Add("RussianSymbols", typeof(string));
+            table.Columns.Add("IntegerNumber", typeof(int));
+            table.Columns.Add("FloatingPointNumber", typeof(double));
+
+            foreach (DataModel data in dataList)
+            {
+                // Add a row for each data item
+                table.Rows.Add(data.Id, data.Date.Date, data.LatinSymbols, data.RussianSymbols, data.IntegerNumber, data.FloatingPointNumber);
+            }
+
+            return table;
         }
     }
 }
