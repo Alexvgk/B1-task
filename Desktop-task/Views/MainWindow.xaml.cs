@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Desktop_task.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,8 @@ namespace Desktop_task
         public MainWindow()
         {
             InitializeComponent();
+            MainViewModel viewModel = new MainViewModel();
+            DataContext = viewModel;
         }
     }
 }
