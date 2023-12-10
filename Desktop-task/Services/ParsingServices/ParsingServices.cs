@@ -222,6 +222,14 @@ namespace Desktop_task.Services.ParsingServices
                     }
                 }
 
+                dataTable.Rows.Add("По классу", classId
+                                , totalClass.ActivIncomSaldo
+                                , totalClass.PassivIncomSaldo
+                                , totalClass.Debit
+                                , totalClass.Credit
+                                , totalClass.ActivOutcomSaldo
+                                , totalClass.PassOutcomSaldo);
+                AddLines(ref General, totalClass);
                 // Add the overall total row to the DataTable
                 dataTable.Rows.Add("Общее", null
                     , General.ActivIncomSaldo
