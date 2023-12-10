@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace Desktop_task.Model
 {
-    internal class Bank
+    public class Bank : BaseModel
     {
+        public string Name { get; set; }
+
+        public ICollection<Account> Accounts { get; set; }
     }
 }

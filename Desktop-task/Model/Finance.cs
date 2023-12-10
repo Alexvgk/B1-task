@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace Desktop_task.Model
 {
-    internal class Finance
+    public class Finance : BaseModel
     {
+        public int DataId { get; set; }
+        public int ClassId { get; set; }
+
+        public Class Class { get; set; }
+
+        public Data Data { get; set; }
     }
 }
