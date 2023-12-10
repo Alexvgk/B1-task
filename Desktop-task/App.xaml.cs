@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Desktop_task.Services.Data;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,5 +16,18 @@ namespace Desktop_task
     /// </summary>
     public partial class App : Application
     {
+
+        readonly MainWindow mainWindow;
+
+
+        public App(MainWindow mainWindow)
+        {
+            this.mainWindow = mainWindow;
+        }
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            mainWindow.Show(); 
+            base.OnStartup(e);
+        }
     }
 }
