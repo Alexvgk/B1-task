@@ -11,8 +11,8 @@ namespace Desktop_task.Model
         public int DataId { get; set; }
         public int ClassId { get; set; }
 
-        public Class Class { get; set; }
+        public Class? Class { get; set; }
 
-        public Data Data { get; set; }
+        public Data? Data { get; set; }
     }
 }

@@ -8,9 +8,9 @@ namespace Desktop_task.Model
 {
     public class File : BaseModel
     {
-        public string FileName { get; set; }
+        public string? FileName { get; set; }
         public DateTime FileDate { get; set; }
 
-        public ICollection<Class> Classes { get; set; }
+        public ICollection<Class>? Classes { get; set; }
     }
 }

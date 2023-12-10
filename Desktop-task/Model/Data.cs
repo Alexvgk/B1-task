@@ -17,6 +17,6 @@ namespace Desktop_task.Model
 
         public int AccountId { get; set; }
 
-        public Account Account { get; set; }
+        public Account? Account { get; set; }
     }
 }

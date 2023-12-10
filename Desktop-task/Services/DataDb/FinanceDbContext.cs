@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Desktop_task.Services.Data
+namespace Desktop_task.Services.DataDb
 {
     public class FinanceDbContext : DbContext
     {
@@ -28,8 +28,11 @@ namespace Desktop_task.Services.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-
-        }
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\\\Database.mdf;Integrated Security=True");
+            }
+        }   
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

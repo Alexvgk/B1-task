@@ -9,11 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Repositories\" />
-    <Folder Include="ViewModels\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="bin\Debug\net6.0-windows\Database.mdf" />
     <None Include="bin\Debug\net6.0-windows\Database_log.ldf" />
   </ItemGroup>

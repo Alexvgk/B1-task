@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using Desktop_task;
-using Desktop_task.Services.Data;
+using Desktop_task.Services.DataDb;
 using Microsoft.EntityFrameworkCore;
 using System.Configuration;
 
