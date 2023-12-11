@@ -15,6 +15,7 @@ namespace Desktop_task.ViewModels
 {
     public class MainViewModel : BaseViewModel
     {
+        private readonly FinanceDbContext _financeDbContext; 
         public ICommand OpenFileCommand { get; set; }
         public ICommand ParseExcelCommand { get; set; }
         public ICommand LoadFileDataCommand { get; set; }
@@ -76,8 +77,9 @@ namespace Desktop_task.ViewModels
             }
         }
 
-        public MainViewModel()
+        public MainViewModel(FinanceDbContext _financeDbContext)
         {
+            this._financeDbContext = _financeDbContext; 
             OpenFileCommand = new DelegateCommand(OpenFile);
             ParseExcelCommand = new DelegateCommand(ParseExcel);
             LoadFileDataCommand = new DelegateCommand<Model.File>(LoadFileData);
@@ -87,12 +89,12 @@ namespace Desktop_task.ViewModels
 
         private async void InitializeAsync()
         {
-            FileRepo repo = new FileRepo(new FinanceDbContext());
+            FileRepo repo = new FileRepo(_financeDbContext);
             LoadedFiles = new ObservableCollection<Model.File>(await repo.GetAllAsync());
         }
         private async void SetData()
         {
-            ExcelData = await ParsingServices.TryParseToDataTable(_selectedFile);
+            ExcelData = await ParsingServices.TryParseToDataTable(_selectedFile, _financeDbContext);
         }
 
         private void LoadFileData(Model.File obj)
@@ -102,8 +104,8 @@ namespace Desktop_task.ViewModels
 
         private async void ParseExcel()
         {
-            ParsingServices.TryParse(_selectedFilePath);
-            FileRepo repo = new FileRepo(new FinanceDbContext());
+            await  ParsingServices.TryParse(_selectedFilePath, _financeDbContext);
+            FileRepo repo = new FileRepo(_financeDbContext);
             LoadedFiles = new ObservableCollection<Model.File>(await repo.GetAllAsync());
         }
 

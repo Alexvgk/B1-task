@@ -19,10 +19,23 @@ public class Program
                 var databaseConnectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
                 services.AddDbContext<FinanceDbContext>(options =>
                     options.UseSqlServer(databaseConnectionString));
-
             })
             .Build();
+
+        using (var serviceScope = host.Services.CreateScope())
+        {
+            var serviceProvider = serviceScope.ServiceProvider;
+            EnsureDatabaseCreated(serviceProvider);
+        }
         var app = host.Services.GetService<App>();
         app?.Run();
+    }
+    private static void EnsureDatabaseCreated(IServiceProvider serviceProvider)
+    {
+        using (var scope = serviceProvider.CreateScope())
+        {
+            var dbContext = scope.ServiceProvider.GetRequiredService<FinanceDbContext>();
+            dbContext.Database.EnsureCreated();
+        }
     }
 }

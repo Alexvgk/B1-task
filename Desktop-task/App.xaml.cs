@@ -16,7 +16,6 @@ namespace Desktop_task
     /// </summary>
     public partial class App : Application
     {
-
         readonly MainWindow mainWindow;
 
 

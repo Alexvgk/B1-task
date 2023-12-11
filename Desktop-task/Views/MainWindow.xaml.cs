@@ -1,4 +1,5 @@
-﻿using Desktop_task.ViewModels;
+﻿using Desktop_task.Services.DataDb;
+using Desktop_task.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,11 +22,13 @@ namespace Desktop_task
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        public MainWindow(FinanceDbContext financeDb)
         {
-            InitializeComponent();
-            MainViewModel viewModel = new MainViewModel();
-            DataContext = viewModel;
+
+                InitializeComponent();
+                MainViewModel viewModel = new MainViewModel(financeDb);
+                DataContext = viewModel;
+
         }
     }
 }

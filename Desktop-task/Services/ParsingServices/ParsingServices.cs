@@ -16,7 +16,7 @@ namespace Desktop_task.Services.ParsingServices
     public class ParsingServices
     {
 
-        public static async Task TryParse(string path)
+        public static async Task TryParse(string path,DataDb.FinanceDbContext financeDb)
         {
             try
             {
@@ -32,7 +32,7 @@ namespace Desktop_task.Services.ParsingServices
                 {
                     FileName = fileName,
                 };
-                FileRepo fileRepo = new FileRepo(new DataDb.FinanceDbContext());
+                FileRepo fileRepo = new FileRepo( financeDb);
                 await fileRepo.AddAsync(xlsFile);
 
                 // Opening the Excel file for reading
@@ -46,7 +46,7 @@ namespace Desktop_task.Services.ParsingServices
                     {
                         Name = sheet.GetRow(0).GetCell(0).ToString()
                     };
-                    BankRepo bankRepo = new BankRepo(new DataDb.FinanceDbContext());
+                    BankRepo bankRepo = new BankRepo(financeDb);
                     await bankRepo.AddAsync(bank);
                     int rowCount = sheet.LastRowNum + 1;
 
@@ -67,7 +67,7 @@ namespace Desktop_task.Services.ParsingServices
                                     IsValid = true,
                                     BankId = bank.Id,
                                 };
-                                AccountRepo accountRepo = new AccountRepo(new DataDb.FinanceDbContext());
+                                AccountRepo accountRepo = new AccountRepo(financeDb);
                                 await accountRepo.AddAsync(account);
 
                                 // Creating a Data object
@@ -81,7 +81,7 @@ namespace Desktop_task.Services.ParsingServices
                                     ActivOutcomSaldo = Convert.ToDecimal(sheet.GetRow(row).GetCell(5).NumericCellValue),
                                     PassOutcomSaldo = Convert.ToDecimal(sheet.GetRow(row).GetCell(6).NumericCellValue),
                                 };
-                                DataRepo dataRepo = new DataRepo(new DataDb.FinanceDbContext());
+                                DataRepo dataRepo = new DataRepo(financeDb);
                                 await dataRepo.AddAsync(data);
 
                                 // Creating a Finance object
@@ -90,7 +90,7 @@ namespace Desktop_task.Services.ParsingServices
                                     DataId = data.Id,
                                     ClassId = lastClass.Id,
                                 };
-                                FinanceRepo financeRepo = new FinanceRepo(new DataDb.FinanceDbContext());
+                                FinanceRepo financeRepo = new FinanceRepo(financeDb);
                                 await financeRepo.AddAsync(finance);
                             }
                             // If accountId is in the range of 10 to 99, skip it
@@ -114,7 +114,7 @@ namespace Desktop_task.Services.ParsingServices
                                         ClassName = description,
                                         FileId = xlsFile.Id
                                     };
-                                    ClassRepo classRepo = new ClassRepo(new DataDb.FinanceDbContext());
+                                    ClassRepo classRepo = new ClassRepo(financeDb);
                                     await classRepo.AddAsync(classObject);
                                     lastClass = classObject;
                                 }
@@ -136,12 +136,12 @@ namespace Desktop_task.Services.ParsingServices
         }
 
         // Method for transforming financial data into a DataTable, grouped by class and account
-        public static async Task<DataTable> TryParseToDataTable(Model.File file)
+        public static async Task<DataTable> TryParseToDataTable(Model.File file, DataDb.FinanceDbContext financeDb)
         {
             try
             {
                 // Retrieve financial data from the database
-                FinanceRepo financeRepo = new FinanceRepo(new DataDb.FinanceDbContext());
+                FinanceRepo financeRepo = new FinanceRepo(financeDb);
                 List<Model.Finance> finances = await financeRepo.GetAllIncludeAsync();
 
                 // Filter financial data by the specified file

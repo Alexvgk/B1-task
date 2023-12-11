@@ -18,22 +18,11 @@ namespace Desktop_task.Services.DataDb
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Bank> Banks { get; set; }
 
-        public FinanceDbContext() { }
-
         public FinanceDbContext(DbContextOptions<FinanceDbContext> options) : base(options)
         {
             //Database.EnsureDeleted();
-            Database.EnsureCreated();
+            //Database.EnsureCreated();
         }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlServer("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\\\Database.mdf;Integrated Security=True");
-            }
-        }   
-
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
