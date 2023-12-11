@@ -1,5 +1,6 @@
 ﻿
 using Console_Test.Conbination;
+using Console_Test.Generation;
 using Console_Test.Model;
 using Console_Test.Services.Data;
 using Console_Test.Services.Data.DataServices;
@@ -7,7 +8,21 @@ using Console_Test.Services.Data.Repository;
 using Console_Test.Services.Parsing;
 using System.Data.SqlClient;
 
+string filesFolderPath = @"files\";
 
+// Absolute path to the files folder
+string currentDirectory = AppDomain.CurrentDomain.BaseDirectory;
+string absoluteFilesFolderPath = System.IO.Path.Combine(currentDirectory, filesFolderPath);
+
+// Check if the files folder exists, if not, create it
+if (!Directory.Exists(absoluteFilesFolderPath))
+{
+    Directory.CreateDirectory(absoluteFilesFolderPath);
+
+    // Generate files in the folder (Add your file generation logic here)
+    IGenerator gen = new TxtGenerator();
+    gen.generateFile();
+}
 IConbinator conbinator = new TxtConbinator();
 while (true)
 {

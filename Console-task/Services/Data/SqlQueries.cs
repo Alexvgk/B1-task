@@ -45,19 +45,20 @@ namespace Console_Test.Services.Data
 
         public const string createProcedureScript = "Exec CalculateSumAndMedian";
 
-        private const string Procedure = "CREATE PROCEDURE CalculateSumAndMedian" +
-            "AS" +
-            "BEGIN" +
-            "DECLARE @SumOfIntegers BIGINT;" +
-            "DECLARE @MedianOfFloats FLOAT;" +
-            "        SELECT @SumOfIntegers = SUM(DataTable.IntegerNumber)" +
-            "        FROM DataTable;" +
-            "        SELECT TOP 1 @MedianOfFloats = AVG(Value)" +
-            "        FROM" +
-            "           (SELECT DataTable.FloatingPointNumber AS Value, ROW_NUMBER() OVER (ORDER BY DataTable.FloatingPointNumber ) AS RowNum" +
-            "                     FROM DataTable) AS Temp" +
-            "        WHERE RowNum IN ((SELECT COUNT(*) / 2 + 1 FROM DataTable), (SELECT (COUNT(*) + 1) / 2 FROM DataTable), (SELECT (COUNT(*) + 2) / 2 FROM DataTable));" +
-            "SELECT @SumOfIntegers AS SumOfIntegers, @MedianOfFloats AS MedianOfFloats;" +
+        public const string Procedure =
+            "CREATE PROCEDURE CalculateSumAndMedian " +
+            "AS " +
+            "BEGIN " +
+            "DECLARE @SumOfIntegers BIGINT; " +
+            "DECLARE @MedianOfFloats FLOAT; " +
+            "SELECT @SumOfIntegers = SUM(IntegerNumber) " +
+            "FROM DataTable; " +
+            "SELECT TOP 1 @MedianOfFloats = AVG(Value) " +
+            "FROM " +
+            "(SELECT FloatingPointNumber AS Value, ROW_NUMBER() OVER (ORDER BY FloatingPointNumber ) AS RowNum " +
+            "FROM DataTable) AS Temp " +
+            "WHERE RowNum IN ((SELECT COUNT(*) / 2 + 1 FROM DataTable), (SELECT (COUNT(*) + 1) / 2 FROM DataTable), (SELECT (COUNT(*) + 2) / 2 FROM DataTable)); " +
+            "SELECT @SumOfIntegers AS SumOfIntegers, @MedianOfFloats AS MedianOfFloats; " +
             "END;";
 
     }
